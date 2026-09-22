@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* shadcn semantic tokens - the components sourced from the personal library
+   (tag select, tooltips, charts, loaders) render against these names. */
+:root {
+  --radius: 0.625rem;
+  --brand: #0f766e;            /* DocSync teal - rename/recolour here */
+  --brand-strong: #0b5c56;
+  --brand-soft: #d5f0ec;
+  --brand-tint: #e9f6f4;
+
+  --background: #f4f7f8;       /* app canvas (Gmail's soft grey-blue, shifted to our hue) */
+  --foreground: #1f2328;
+  --card: #ffffff;
+  --card-foreground: #1f2328;
+  --popover: #ffffff;
+  --popover-foreground: #1f2328;
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: #eef2f3;
+  --secondary-foreground: #1f2328;
+  --muted: #eef2f3;
+  --muted-foreground: #5f6b73;
+  --accent: #e6ecee;
+  --accent-foreground: #1f2328;
+  --destructive: #c5221f;
+  --destructive-foreground: #ffffff;
+  --border: #dfe5e8;
+  --input: #dfe5e8;
+  --ring: #5eb5ab;
+  --chart-1: #0f766e;
+  --chart-2: #d93025;
+  --chart-3: #e37400;
+  --chart-4: #1a73e8;
+  --chart-5: #9334e6;
+
+  --ok: #188038;        --ok-bg: #e6f4ea;
+  --mismatch: #c5221f;  --mismatch-bg: #fce8e6;
+  --review: #b06000;    --review-bg: #fef3d6;
+  --failed: #5f6368;    --failed-bg: #e8eaed;
+  --row-unread: #ffffff;
+  --row-read: #f2f6f7;
+}
+
+.dark {
+  --background: #111416;
+  --foreground: #e6e9eb;
+  --card: #1a1e21;
+  --card-foreground: #e6e9eb;
+  --popover: #1f2427;
+  --popover-foreground: #e6e9eb;
+  --secondary: #23292d;
+  --secondary-foreground: #e6e9eb;
+  --muted: #23292d;
+  --muted-foreground: #9aa5ad;
+  --accent: #2a3135;
+  --accent-foreground: #e6e9eb;
+  --border: #2d3539;
+  --input: #2d3539;
+  --brand-soft: #123f3a;
+  --brand-tint: #0f2c29;
+  --ok-bg: #12301c; --mismatch-bg: #3a1614; --review-bg: #3a2a0a; --failed-bg: #2a2f33;
+  /* the light-mode status colours are too dark to read as text on the dark tints above (about 2.6:1) */
+  --ok: #5bd38a; --mismatch: #ff8a80; --review: #f4b860; --failed: #aab1b7;
+  --row-unread: #1a1e21;
+  --row-read: #15191b;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: "Google Sans Text", "Segoe UI", Roboto, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-tint: var(--brand-tint);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-mismatch: var(--mismatch);
+  --color-mismatch-bg: var(--mismatch-bg);
+  --color-review: var(--review);
+  --color-review-bg: var(--review-bg);
+  --color-failed: var(--failed);
+  --color-failed-bg: var(--failed-bg);
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html, body, #root { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+  button { cursor: pointer; }
+  button:disabled { cursor: default; }
+  ::selection { background: var(--brand-soft); }
+}
+
+/* thin Gmail-like scrollbars */
+.scroll-thin { scrollbar-width: thin; scrollbar-color: #c4ccd0 transparent; }
+.scroll-thin::-webkit-scrollbar { width: 10px; height: 10px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #c4ccd0; border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+.scroll-thin::-webkit-scrollbar-thumb:hover { background-color: #9aa5ad; }
+
+/* from the component library: lucide icons that draw themselves on */
+@keyframes icon-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+/* from the component library: MathCurveLoader's travelling segment */
+@keyframes curve-trace { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.skeleton { position: relative; overflow: hidden; background: var(--muted); border-radius: 6px; }
+.skeleton::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+  animation: shimmer 1.4s infinite;
+}
+/* text that sits ON a status colour: white in light mode, near-black in dark mode where those colours are light */
+.dark .text-brand-strong { color: #8fded3; }      /* the light-mode teal is unreadable on the dark teal tint */
+.on-status { color: #fff; }
+.dark .on-status { color: #0f1a17; }
+.dark .skeleton::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent); }
+
+@keyframes progress-stripes { to { background-position: 28px 0; } }
+
+/* Avery, the hover guide: a gentle bob on an inner element (the button around it never moves) */
+@keyframes git-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.git-bob { animation: git-bob 3.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-icon-draw] * { animation: none !important; stroke-dashoffset: 0 !important; }
+  [role="status"] path { animation: none !important; stroke-dasharray: none !important; }
+  .skeleton::after { animation: none; }
+  .git-bob { animation: none; }
+}
+
+@media print {
+  html, body, #root, #root > div, #root > div > div, main, .print-area, .print-area > div { display: block !important; height: auto !important; min-height: 0 !important; overflow: visible !important; }
+  main { padding: 0 !important; }
+  .print-area, .print-area article { border: 0 !important; box-shadow: none !important; background: #fff !important; }
+  .print-area article { max-width: none !important; padding: 0 !important; }
+  .print-area section { break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }      /* keep the bars and dots */
+  @page { margin: 16mm; }
+  body { overflow: visible; background: #fff; }
+  .no-print, .print-area > .no-print, #root .no-print { display: none !important; }      /* must beat the "flow everything" rule above */
+  .print-area { position: static !important; overflow: visible !important; height: auto !important; box-shadow: none !important; }
+  [data-fold] { grid-template-rows: 1fr !important; opacity: 1 !important; }   /* a printout shows every folded section */
+}
